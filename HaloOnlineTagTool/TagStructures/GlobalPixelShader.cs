@@ -13,37 +13,38 @@ namespace HaloOnlineTagTool.TagStructures
 	public class GlobalPixelShader
 	{
 		public List<UnknownBlock> Unknown;
-		public float Unknown2;
-		public List<UnknownBlock2> Unknown3;
+		public uint Unknown2;
+		public List<PixelShader> PixelShaders;
 
 		[TagStructure(Size = 0x10)]
 		public class UnknownBlock
 		{
-			public float Unknown;
-			public float Unknown2;
-			public float Unknown3;
-			public float Unknown4;
+			public uint Unknown;
+			public uint Unknown2;
+			public uint Unknown3;
+			public uint Unknown4;
 		}
 
 		[TagStructure(Size = 0x50)]
-		public class UnknownBlock2
+		public class PixelShader
 		{
-			public float Unknown;
-			public float Unknown2;
-			public float Unknown3;
-			public float Unknown4;
-			public float Unknown5;
-			public byte[] Unknown6;
-			public float Unknown7;
-			public float Unknown8;
-			public float Unknown9;
-			public float Unknown10;
-			public float Unknown11;
-			public float Unknown12;
-			public float Unknown13;
-			public float Unknown14;
-			public float Unknown15;
-			public float Unknown16;
+			public byte[] Unknown;
+			public byte[] Unknown2;
+			public uint Unknown3;
+			public uint Unknown4;
+			public uint Unknown5;
+			public uint Unknown6;
+			public List<UnknownBlock> Unknown7;
+			public uint Unknown8;
+			public uint Unknown9;
+			public uint PixelShader2;
+
+			[TagStructure(Size = 0x8)]
+			public class UnknownBlock
+			{
+				public StringId Unknown;
+				public uint Unknown2;
+			}
 		}
 	}
 }

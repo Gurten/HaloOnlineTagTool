@@ -12,20 +12,20 @@ namespace HaloOnlineTagTool.TagStructures
 	[TagStructure(Class = "wpos", Size = 0x24)]
 	public class GuiWidgetPositionAnimationDefinition
 	{
-		public float Unknown;
-		public List<UnknownBlock> Unknown2;
-		public byte[] Unknown3;
+		public uint AnimationFlags;
+		public List<AnimationDefinitionBlock> AnimationDefinition;
+		public byte[] Data;
 
 		[TagStructure(Size = 0x1C)]
-		public class UnknownBlock
+		public class AnimationDefinitionBlock
 		{
-			public float Unknown;
-			public float KeyframeX;
-			public float KeyframeY;
-			public float Unknown2;
-			public float Unknown3;
-			public float Unknown4;
-			public float Unknown5;
+			public uint Frame;
+			public float XPosition;
+			public float YPosition;
+			public float ZPosition;
+			public uint Unknown;
+			public uint Unknown2;
+			public uint Unknown3;
 		}
 	}
 }

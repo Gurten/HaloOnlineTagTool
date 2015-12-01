@@ -12,52 +12,106 @@ namespace HaloOnlineTagTool.TagStructures
 	[TagStructure(Class = "drdf", Size = 0x10)]
 	public class DamageResponseDefinition
 	{
-		public List<UnknownBlock> Unknown;
-		public float Unknown2;
+		public List<Respons> Responses;
+		public uint Unknown;
 
 		[TagStructure(Size = 0xC0)]
-		public class UnknownBlock
+		public class Respons
 		{
-			public float Unknown;
-			public float Unknown2;
-			public float Unknown3;
-			public float Unknown4;
-			public float Unknown5;
-			public float Unknown6;
+			public ResponseTypeValue ResponseType;
+			public short Unknown;
+			public short Unknown2;
+			public short Unknown3;
+			public uint Unknown4;
+			public uint Unknown5;
+			public uint Unknown6;
 			public float Unknown7;
-			public float Unknown8;
-			public float Unknown9;
+			public uint Unknown8;
+			public uint Unknown9;
 			public float Unknown10;
 			public float Unknown11;
-			public float Unknown12;
-			public float Unknown13;
+			public short Unknown12;
+			public short Unknown13;
 			public float Unknown14;
 			public float Unknown15;
 			public float Unknown16;
 			public float Unknown17;
-			public float Unknown18;
-			public float Unknown19;
+			public short Unknown18;
+			public short Unknown19;
 			public float Unknown20;
 			public float Unknown21;
 			public float Unknown22;
 			public float Unknown23;
 			public float Unknown24;
-			public byte[] Unknown25;
+			public float Unknown25;
 			public float Unknown26;
-			public byte[] Unknown27;
-			public float Unknown28;
-			public float Unknown29;
-			public float Unknown30;
-			public float Unknown31;
-			public float Unknown32;
-			public float Unknown33;
-			public float Unknown34;
-			public float Unknown35;
-			public float Unknown36;
-			public float Unknown37;
-			public float Unknown38;
-			public float Unknown39;
-			public float Unknown40;
+			public float LowFrequencyVibrationDuration;
+			public byte[] LowFrequencyVibrationFunction;
+			public float HighFrequencyVibrationDuration;
+			public byte[] HighFrequencyVibrationFunction;
+			public float Duration;
+			public FadeFunctionValue FadeFunction;
+			public short Unknown27;
+			public Angle Rotation;
+			public float Pushback;
+			public float JitterMin;
+			public float JitterMax;
+			public float Duration2;
+			public FalloffFunctionValue FalloffFunction;
+			public short Unknown28;
+			public float RandomTranslation;
+			public Angle RandomRotation;
+			public WobbleFunctionValue WobbleFunction;
+			public short Unknown29;
+			public float WobbleFunctionPeriod;
+			public float WobbleWeight;
+
+			public enum ResponseTypeValue : short
+			{
+				Shielded,
+				Unshielded,
+				All,
+			}
+
+			public enum FadeFunctionValue : short
+			{
+				Linear,
+				Late,
+				VeryLate,
+				Early,
+				VeryEarly,
+				Cosine,
+				Zero,
+				One,
+			}
+
+			public enum FalloffFunctionValue : short
+			{
+				Linear,
+				Late,
+				VeryLate,
+				Early,
+				VeryEarly,
+				Cosine,
+				Zero,
+				One,
+			}
+
+			public enum WobbleFunctionValue : short
+			{
+				One,
+				Zero,
+				Cosine,
+				CosineVariablePeriod,
+				DiagonalWave,
+				DiagonalWaveVariablePeriod,
+				Slide,
+				SlideVariablePeriod,
+				Noise,
+				Jitter,
+				Wander,
+				Spark,
+			}
 		}
 	}
 }

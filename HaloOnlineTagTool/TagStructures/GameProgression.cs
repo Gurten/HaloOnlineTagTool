@@ -17,8 +17,8 @@ namespace HaloOnlineTagTool.TagStructures
 		public List<UnknownBlock3> Unknown3;
 		public List<UnknownBlock4> Unknown4;
 		public List<UnknownBlock5> Unknown5;
-		public float Unknown6;
-		public float Unknown7;
+		public uint Unknown6;
+		public uint Unknown7;
 
 		[TagStructure(Size = 0x4)]
 		public class UnknownBlock
@@ -55,7 +55,7 @@ namespace HaloOnlineTagTool.TagStructures
 			public HaloTag Unknown3;
 			public int MapId;
 			public int Unknown4;
-			public string MapScenarioPath;
+			[TagField(Length = 256)] public string MapScenarioPath;
 		}
 	}
 }

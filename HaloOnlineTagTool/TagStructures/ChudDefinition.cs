@@ -145,24 +145,33 @@ namespace HaloOnlineTagTool.TagStructures
 			[TagStructure(Size = 0x90)]
 			public class AnimationDatum
 			{
-				public float Unknown;
+				public uint Unknown;
 				public HaloTag Animation1;
-				public float Unknown2;
-				public float Unknown3;
+				public uint Unknown2;
+				public uint Unknown3;
 				public HaloTag Animation2;
-				public float Unknown4;
-				public float Unknown5;
+				public uint Unknown4;
+				public uint Unknown5;
 				public HaloTag Animation3;
-				public float Unknown6;
-				public float Unknown7;
+				public uint Unknown6;
+				public uint Unknown7;
 				public HaloTag Animation4;
-				public float Unknown8;
-				public float Unknown9;
+				public uint Unknown8;
+				public uint Unknown9;
 				public HaloTag Animation5;
-				public float Unknown10;
-				public float Unknown11;
+				public uint Unknown10;
+				public uint Unknown11;
 				public HaloTag Animation6;
-				public float Unknown12;
+				public uint Unknown12;
+			}
+
+			[TagStructure(Size = 0x4)]
+			public class RgbaColor
+			{
+				public byte R;
+				public byte G;
+				public byte B;
+				public byte A;
 			}
 
 			[TagStructure(Size = 0x48)]
@@ -172,22 +181,7 @@ namespace HaloOnlineTagTool.TagStructures
 				public short Unknown;
 				public InputValue Input;
 				public RangeInputValue RangeInput;
-				public byte LocalColorAlphaA;
-				public byte LocalColorAR;
-				public byte LocalColorAG;
-				public byte LocalColorAB;
-				public byte LocalColorAlphaB;
-				public byte LocalColorBR;
-				public byte LocalColorBG;
-				public byte LocalColorBB;
-				public byte LocalColorAlphaC;
-				public byte LocalColorCR;
-				public byte LocalColorCG;
-				public byte LocalColorCB;
-				public byte LocalColorAlphaD;
-				public byte LocalColorDR;
-				public byte LocalColorDG;
-				public byte LocalColorDB;
+				[TagField(Count = 0x4)] public RgbaColor[] Colors;
 				public float LocalScalarA;
 				public float LocalScalarB;
 				public float LocalScalarC;
@@ -1011,24 +1005,24 @@ namespace HaloOnlineTagTool.TagStructures
 				[TagStructure(Size = 0x90)]
 				public class AnimationDatum
 				{
-					public float Unknown;
+					public uint Unknown;
 					public HaloTag Animation1;
-					public float Unknown2;
-					public float Unknown3;
+					public uint Unknown2;
+					public uint Unknown3;
 					public HaloTag Animation2;
-					public float Unknown4;
-					public float Unknown5;
+					public uint Unknown4;
+					public uint Unknown5;
 					public HaloTag Animation3;
-					public float Unknown6;
-					public float Unknown7;
+					public uint Unknown6;
+					public uint Unknown7;
 					public HaloTag Animation4;
-					public float Unknown8;
-					public float Unknown9;
+					public uint Unknown8;
+					public uint Unknown9;
 					public HaloTag Animation5;
-					public float Unknown10;
-					public float Unknown11;
+					public uint Unknown10;
+					public uint Unknown11;
 					public HaloTag Animation6;
-					public float Unknown12;
+					public uint Unknown12;
 				}
 
 				[TagStructure(Size = 0x48)]
@@ -1038,22 +1032,7 @@ namespace HaloOnlineTagTool.TagStructures
 					public short Unknown;
 					public InputValue Input;
 					public RangeInputValue RangeInput;
-					public byte LocalColorAlphaA;
-					public byte LocalColorAR;
-					public byte LocalColorAG;
-					public byte LocalColorAB;
-					public byte LocalColorAlphaB;
-					public byte LocalColorBR;
-					public byte LocalColorBG;
-					public byte LocalColorBB;
-					public byte LocalColorAlphaC;
-					public byte LocalColorCR;
-					public byte LocalColorCG;
-					public byte LocalColorCB;
-					public byte LocalColorAlphaD;
-					public byte LocalColorDR;
-					public byte LocalColorDG;
-					public byte LocalColorDB;
+					[TagField(Count = 0x4)] public RgbaColor[] Colors;
 					public float LocalScalarA;
 					public float LocalScalarB;
 					public float LocalScalarC;
@@ -1876,24 +1855,24 @@ namespace HaloOnlineTagTool.TagStructures
 				[TagStructure(Size = 0x78)]
 				public class AnimationDatum
 				{
-					public float Unknown;
+					public uint Unknown;
 					public HaloTag Animation1;
-					public float Unknown2;
-					public float Unknown3;
+					public uint Unknown2;
+					public uint Unknown3;
 					public HaloTag Animation2;
-					public float Unknown4;
-					public float Unknown5;
+					public uint Unknown4;
+					public uint Unknown5;
 					public HaloTag Animation3;
-					public float Unknown6;
-					public float Unknown7;
+					public uint Unknown6;
+					public uint Unknown7;
 					public HaloTag Animation4;
-					public float Unknown8;
-					public float Unknown9;
+					public uint Unknown8;
+					public uint Unknown9;
 					public HaloTag Animation5;
-					public float Unknown10;
-					public float Unknown11;
+					public uint Unknown10;
+					public uint Unknown11;
 					public HaloTag Animation6;
-					public float Unknown12;
+					public uint Unknown12;
 				}
 
 				[TagStructure(Size = 0x48)]
@@ -1903,22 +1882,7 @@ namespace HaloOnlineTagTool.TagStructures
 					public short Unknown;
 					public InputValue Input;
 					public RangeInputValue RangeInput;
-					public byte LocalColorAlphaA;
-					public byte LocalColorAR;
-					public byte LocalColorAG;
-					public byte LocalColorAB;
-					public byte LocalColorAlphaB;
-					public byte LocalColorBR;
-					public byte LocalColorBG;
-					public byte LocalColorBB;
-					public byte LocalColorAlphaC;
-					public byte LocalColorCR;
-					public byte LocalColorCG;
-					public byte LocalColorCB;
-					public byte LocalColorAlphaD;
-					public byte LocalColorDR;
-					public byte LocalColorDG;
-					public byte LocalColorDB;
+					[TagField(Count = 0x4)] public RgbaColor[] Colors;
 					public float LocalScalarA;
 					public float LocalScalarB;
 					public float LocalScalarC;

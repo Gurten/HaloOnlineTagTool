@@ -12,26 +12,28 @@ namespace HaloOnlineTagTool.TagStructures
 	[TagStructure(Class = "form", Size = 0x18)]
 	public class Formation
 	{
-		public float Unknown;
-		public List<UnknownBlock> Unknown2;
-		public float Unknown3;
-		public float Unknown4;
+		public StringId Name;
+		public List<UnknownBlock> Unknown;
+		public uint Unknown2;
+		public uint Unknown3;
 
 		[TagStructure(Size = 0x24)]
 		public class UnknownBlock
 		{
-			public float Unknown;
-			public float Unknown2;
-			public float Unknown3;
-			public float Unknown4;
+			public short Unknown;
+			public short Unknown2;
+			public short Unknown3;
+			public short Unknown4;
 			public float Unknown5;
 			public float Unknown6;
-			public List<UnknownBlock2> Unknown7;
+			public float Unknown7;
+			public float Unknown8;
+			public List<UnknownBlock2> Unknown9;
 
 			[TagStructure(Size = 0x8)]
 			public class UnknownBlock2
 			{
-				public float Unknown;
+				public Angle Unknown;
 				public float Unknown2;
 			}
 		}

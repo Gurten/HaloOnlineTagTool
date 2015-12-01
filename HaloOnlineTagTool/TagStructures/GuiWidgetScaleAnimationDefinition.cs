@@ -12,22 +12,37 @@ namespace HaloOnlineTagTool.TagStructures
 	[TagStructure(Class = "wscl", Size = 0x24)]
 	public class GuiWidgetScaleAnimationDefinition
 	{
-		public float Unknown;
-		public List<UnknownBlock> Unknown2;
-		public byte[] Unknown3;
+		public uint AnimationFlags;
+		public List<AnimationDefinitionBlock> AnimationDefinition;
+		public byte[] Data;
 
 		[TagStructure(Size = 0x24)]
-		public class UnknownBlock
+		public class AnimationDefinitionBlock
 		{
-			public float Unknown;
-			public float Unknown2;
-			public float Unknown3;
-			public float Unknown4;
-			public float Unknown5;
-			public float Unknown6;
-			public float Unknown7;
-			public float Unknown8;
-			public float Unknown9;
+			public uint Frame;
+			public AnchorValue Anchor;
+			public short Unknown;
+			public float CustomAnchorX;
+			public float CustomAnchorY;
+			public float XScale;
+			public float YScale;
+			public uint Unknown2;
+			public uint Unknown3;
+			public uint Unknown4;
+
+			public enum AnchorValue : short
+			{
+				Custom,
+				Center,
+				TopCenter,
+				BottomCenter,
+				LeftCenter,
+				RightCenter,
+				TopLeft,
+				TopRight,
+				BottomRight,
+				BottomLeft,
+			}
 		}
 	}
 }

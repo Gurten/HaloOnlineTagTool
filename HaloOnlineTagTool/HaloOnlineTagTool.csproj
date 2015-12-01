@@ -57,7 +57,9 @@
   <ItemGroup>
     <Compile Include="Analysis\DataReferenceGuess.cs" />
     <Compile Include="Analysis\ITagElementGuessVisitor.cs" />
+    <Compile Include="Commands\Tags\MatchTagsCommand.cs" />
     <Compile Include="Commands\Tags\ConvertPluginsCommand.cs" />
+    <Compile Include="Commands\Tags\ImportBitmapCommand.cs" />
     <Compile Include="Commands\Tags\PhysicsModelTestCommand.cs" />
     <Compile Include="Common\NamingConvention.cs" />
     <Compile Include="Common\SimpleJson.cs" />
@@ -129,13 +131,19 @@
     <Compile Include="Common\Vector4.cs" />
     <Compile Include="Commands\OpenTagCache.cs" />
     <Compile Include="Layouts\TagLayoutField.cs" />
+    <Compile Include="Resources\Geometry\GeometryReference.cs" />
     <Compile Include="Resources\Geometry\BlenderPhmoReader.cs" />
     <Compile Include="Resources\Geometry\PhysicsModelBuilder.cs" />
     <Compile Include="Resources\Geometry\VertexStreamFactory.cs" />
     <Compile Include="Serialization\MaxVersionAttribute.cs" />
     <Compile Include="Serialization\MinVersionAttribute.cs" />
     <Compile Include="Serialization\TagFieldEnumerator.cs" />
+    <Compile Include="Serialization\TagStructureInfo.cs" />
+    <Compile Include="TagVersionMap.cs" />
+    <Compile Include="TagStructures\TagStructureTypes.cs" />
+    <Compile Include="TagStructures\Device.cs" />
     <Compile Include="TagStructures\GameObject.cs" />
+    <Compile Include="TagStructures\Item.cs" />
     <Compile Include="TagStructures\Unit.cs" />
     <Compile Include="V11_1_498295\StringIdResolver.cs" />
     <Compile Include="Resources\Geometry\IVertexStream.cs" />

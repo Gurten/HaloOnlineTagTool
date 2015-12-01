@@ -36,10 +36,22 @@ namespace HaloOnlineTagTool.Serialization
 		/// <returns>The object that was read.</returns>
 		public T Deserialize<T>(ISerializationContext context)
 		{
-			// TODO: Add support for tag inheritance
-			var reader = context.BeginDeserialize();
-			var result = (T)DeserializeStruct(reader, context, typeof(T));
-			context.EndDeserialize(result);
+			var result = Deserialize(context, typeof(T));
+			return (T)Convert.ChangeType(result, typeof(T));
+		}
+
+		/// <summary>
+		/// Deserializes tag data into an object.
+		/// </summary>
+		/// <param name="context">The serialization context to use.</param>
+		/// <param name="structureType">The type of object to deserialize the tag data as.</param>
+		/// <returns>The object that was read.</returns>
+		public object Deserialize(ISerializationContext context, Type structureType)
+		{
+			var info = new TagStructureInfo(structureType, _version);
+			var reader = context.BeginDeserialize(info);
+			var result = DeserializeStruct(reader, context, info);
+			context.EndDeserialize(info, result);
 			return result;
 		}
 
@@ -48,18 +60,18 @@ namespace HaloOnlineTagTool.Serialization
 		/// </summary>
 		/// <param name="reader">The reader.</param>
 		/// <param name="context">The serialization context to use.</param>
-		/// <param name="structType">The type of the structure to deserialize.</param>
+		/// <param name="info">Information about the structure to deserialize.</param>
 		/// <returns>The deserialized structure.</returns>
 		/// <exception cref="System.InvalidOperationException">Target type must have TagStructureAttribute</exception>
-		private object DeserializeStruct(BinaryReader reader, ISerializationContext context, Type structType)
+		private object DeserializeStruct(BinaryReader reader, ISerializationContext context, TagStructureInfo info)
 		{
 			var baseOffset = reader.BaseStream.Position;
-			var instance = Activator.CreateInstance(structType);
-			var enumerator = new TagFieldEnumerator(structType, _version);
+			var instance = Activator.CreateInstance(info.Types[0]);
+			var enumerator = new TagFieldEnumerator(info);
 			while (enumerator.Next())
 				DeserializeProperty(reader, context, instance, enumerator, baseOffset);
-			if (enumerator.Structure.Size > 0)
-				reader.BaseStream.Position = baseOffset + enumerator.Structure.Size;
+			if (enumerator.Info.TotalSize > 0)
+				reader.BaseStream.Position = baseOffset + enumerator.Info.TotalSize;
 			return instance;
 		}
 
@@ -148,7 +160,7 @@ namespace HaloOnlineTagTool.Serialization
 		{
 			// Indirect objects
 			// TODO: Remove ResourceReference hax, the Indirect flag wasn't available when I generated the tag structures
-			if (valueInfo != null && ((valueInfo.Flags & TagElementFlags.Indirect) != 0 || valueType == typeof(ResourceReference)))
+			if (valueInfo != null && ((valueInfo.Flags & TagFieldFlags.Indirect) != 0 || valueType == typeof(ResourceReference)))
 				return DeserializeIndirectValue(reader, context, valueType);
 
 			// enum = Enum type
@@ -157,11 +169,11 @@ namespace HaloOnlineTagTool.Serialization
 
 			// string = ASCII string
 			if (valueType == typeof(string))
-				return DeserializeString(reader);
+				return DeserializeString(reader, valueInfo);
 
 			// HaloTag = Tag reference
 			if (valueType == typeof(HaloTag))
-				return DeserializeTagReference(reader, context);
+				return DeserializeTagReference(reader, context, valueInfo);
 
 			// ResourceAddress = Resource address
 			if (valueType == typeof(ResourceAddress))
@@ -202,7 +214,7 @@ namespace HaloOnlineTagTool.Serialization
 				return DeserializeRange(reader, valueType);
 
 			// Assume the value is a structure
-			return DeserializeStruct(reader, context, valueType);
+			return DeserializeStruct(reader, context, new TagStructureInfo(valueType, _version));
 		}
 
 		/// <summary>
@@ -267,10 +279,12 @@ namespace HaloOnlineTagTool.Serialization
 		/// </summary>
 		/// <param name="reader">The reader.</param>
 		/// <param name="context">The serialization context to use.</param>
+		/// <param name="valueInfo">The value information. Can be <c>null</c>.</param>
 		/// <returns>The deserialized tag reference.</returns>
-		private static HaloTag DeserializeTagReference(BinaryReader reader, ISerializationContext context)
+		private static HaloTag DeserializeTagReference(BinaryReader reader, ISerializationContext context, TagFieldAttribute valueInfo)
 		{
-			reader.BaseStream.Position += 0xC; // Skip the class name and zero bytes, it's not important
+			if (valueInfo == null || (valueInfo.Flags & TagFieldFlags.Short) == 0)
+				reader.BaseStream.Position += 0xC; // Skip the class name and zero bytes, it's not important
 			var index = reader.ReadInt32();
 			return context.GetTagByIndex(index);
 		}
@@ -329,12 +343,16 @@ namespace HaloOnlineTagTool.Serialization
 		/// Deserializes a null-terminated ASCII string.
 		/// </summary>
 		/// <param name="reader">The reader.</param>
+		/// <param name="valueInfo">The value information.</param>
 		/// <returns>The deserialized string.</returns>
-		private static string DeserializeString(BinaryReader reader)
+		private static string DeserializeString(BinaryReader reader, TagFieldAttribute valueInfo)
 		{
+			if (valueInfo == null || valueInfo.Length == 0)
+				throw new ArgumentException("Cannot deserialize a string with no length set");
+
 			// Keep reading until a null terminator is found
-			// TODO: Fix this for UTF-8 strings
 			var result = new StringBuilder();
+			var startPos = reader.BaseStream.Position;
 			while (true)
 			{
 				var ch = reader.ReadByte();
@@ -342,6 +360,7 @@ namespace HaloOnlineTagTool.Serialization
 					break;
 				result.Append((char)ch);
 			}
+			reader.BaseStream.Position = startPos + valueInfo.Length;
 			return result.ToString();
 		}
 

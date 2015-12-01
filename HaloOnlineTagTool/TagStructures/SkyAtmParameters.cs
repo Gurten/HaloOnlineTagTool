@@ -9,73 +9,77 @@ using HaloOnlineTagTool.Serialization;
 
 namespace HaloOnlineTagTool.TagStructures
 {
-	[TagStructure(Class = "skya", Size = 0x4C)]
+	[TagStructure(Class = "skya", Size = 0x4C, MaxVersion = EngineVersion.V10_1_449175_Live)]
+	[TagStructure(Class = "skya", Size = 0x54, MinVersion = EngineVersion.V11_1_498295_Live)]
 	public class SkyAtmParameters
 	{
-		public float Unknown;
-		public HaloTag Unknown2;
+		public int Unknown;
+		public HaloTag FogBitmap;
+		public float Unknown2;
 		public float Unknown3;
 		public float Unknown4;
 		public float Unknown5;
 		public float Unknown6;
 		public float Unknown7;
 		public float Unknown8;
-		public float Unknown9;
-		public float Unknown10;
-		public List<UnknownBlock> Unknown11;
-		public List<UnknownBlock2> Unknown12;
+		public int Unknown9;
+		[MinVersion(EngineVersion.V11_1_498295_Live)] public float Unknown10;
+		[MinVersion(EngineVersion.V11_1_498295_Live)] public int Unknown11;
+		public List<AtmosphereProperty> AtmosphereProperties;
+		public List<UnderwaterBlock> Underwater;
 
 		[TagStructure(Size = 0xA4)]
-		public class UnknownBlock
+		public class AtmosphereProperty
 		{
-			public float Unknown;
-			public float Unknown2;
+			public short Unknown;
+			public short Unknown2;
+			public StringId Name;
+			public float LightSourceY;
+			public float LightSourceX;
+			public float FogColorR;
+			public float FogColorG;
+			public float FogColorB;
+			public float Brightness;
+			public float FogGradientThreshold;
+			public float LightIntensity;
+			public float SkyInvisiblilityThroughFog;
 			public float Unknown3;
 			public float Unknown4;
-			public float Unknown5;
+			public float LightSourceSpread;
+			public uint Unknown5;
+			public float FogIntensity;
 			public float Unknown6;
-			public float Unknown7;
-			public float Unknown8;
-			public float Unknown9;
-			public float Unknown10;
-			public float Unknown11;
-			public float Unknown12;
-			public float Unknown13;
-			public float Unknown14;
-			public float Unknown15;
-			public float Unknown16;
-			public float Unknown17;
-			public float Unknown18;
-			public float Unknown19;
-			public float Unknown20;
-			public float Unknown21;
-			public float Unknown22;
-			public float Unknown23;
-			public float Unknown24;
-			public float Unknown25;
-			public float Unknown26;
-			public float Unknown27;
-			public float Unknown28;
-			public float Unknown29;
-			public float Unknown30;
-			public float Unknown31;
-			public float Unknown32;
-			public float Unknown33;
-			public float Unknown34;
-			public float Unknown35;
-			public HaloTag Unknown36;
-			public float Unknown37;
-			public float Unknown38;
+			public float TintCyan;
+			public float TintMagenta;
+			public float TintYellow;
+			public float FogIntensityCyan;
+			public float FogIntensityMagenta;
+			public float FogIntensityYellow;
+			public float BackgroundColorRed;
+			public float BackgroundColorGreen;
+			public float BackgroundColorBlue;
+			public float TintRed;
+			public float Tint2Green;
+			public float Tint2Blue;
+			public float FogIntensity2;
+			public float StartDistance;
+			public float EndDistance;
+			public float FogVelocityX;
+			public float FogVelocityY;
+			public float FogVelocityZ;
+			public HaloTag WeatherEffect;
+			public uint Unknown7;
+			public uint Unknown8;
 		}
 
 		[TagStructure(Size = 0x14)]
-		public class UnknownBlock2
+		public class UnderwaterBlock
 		{
-			public float Unknown;
-			public float Unknown2;
-			public float Unknown3;
-			public float Unknown4;
-			public float Unknown5;
+			public StringId Name;
+			public float ColorA;
+			public float ColorR;
+			public float ColorG;
+			public float ColorB;
 		}
 	}
 }

@@ -12,90 +12,90 @@ namespace HaloOnlineTagTool.TagStructures
 	[TagStructure(Class = "sfx+", Size = 0x10)]
 	public class SoundEffectCollection
 	{
-		public List<UnknownBlock> Unknown;
-		public float Unknown2;
+		public List<SoundEffect> SoundEffects;
+		public uint Unknown;
 
 		[TagStructure(Size = 0x4C)]
-		public class UnknownBlock
+		public class SoundEffect
 		{
-			public float Unknown;
-			public float Unknown2;
-			public float Unknown3;
-			public float Unknown4;
-			public float Unknown5;
-			public float Unknown6;
-			public float Unknown7;
-			public List<UnknownBlock2> Unknown8;
-			public float Unknown9;
-			public float Unknown10;
-			public float Unknown11;
-			public float Unknown12;
-			public float Unknown13;
-			public float Unknown14;
-			public List<UnknownBlock3> Unknown15;
+			public StringId Name;
+			public uint Unknown;
+			public uint Unknown2;
+			public uint Unknown3;
+			public uint Flags;
+			public uint Unknown4;
+			public uint Unknown5;
+			public List<FilterBlock> Filter;
+			public uint Unknown6;
+			public uint Unknown7;
+			public uint Unknown8;
+			public uint Unknown9;
+			public uint Unknown10;
+			public uint Unknown11;
+			public List<SoundEffectBlock> SoundEffect2;
 
 			[TagStructure(Size = 0x48)]
-			public class UnknownBlock2
+			public class FilterBlock
 			{
-				public float Unknown;
-				public float Unknown2;
-				public float Unknown3;
-				public float Unknown4;
-				public float Unknown5;
-				public float Unknown6;
-				public float Unknown7;
-				public float Unknown8;
-				public float Unknown9;
-				public float Unknown10;
-				public float Unknown11;
-				public float Unknown12;
-				public float Unknown13;
-				public float Unknown14;
-				public float Unknown15;
-				public float Unknown16;
-				public float Unknown17;
-				public float Unknown18;
+				public int FilterType;
+				public int FilterWidth;
+				public uint LeftFreqScaleMin;
+				public uint LeftFreqScaleMax;
+				public uint LeftFreqRandomBaseVarianceMin;
+				public uint LeftFreqRandomBaseVarianceMax;
+				public uint LeftGainScaleMin;
+				public uint LeftGainScaleMax;
+				public uint LeftGainRandomBaseVarianceMin;
+				public uint LeftGainRandomBaseVarianceMax;
+				public uint RightFreqScaleMin;
+				public uint RightFreqScaleMax;
+				public uint RightFreqRandomBaseVarianceMin;
+				public uint RightFreqRandomBaseVarianceMax;
+				public uint RightGainScaleMin;
+				public uint RightGainScaleMax;
+				public uint RightGainRandomBaseVarianceMin;
+				public uint RightGainRandomBaseVarianceMax;
 			}
 
 			[TagStructure(Size = 0x48)]
-			public class UnknownBlock3
+			public class SoundEffectBlock
 			{
 				public HaloTag Unknown;
-				public List<UnknownBlock> Unknown2;
-				public List<UnknownBlock2> Unknown3;
-				public float Unknown4;
-				public float Unknown5;
-				public float Unknown6;
-				public float Unknown7;
-				public float Unknown8;
-				public float Unknown9;
-				public float Unknown10;
-				public float Unknown11;
+				public List<Component> Components;
+				public List<TemplateCollectionBlock> TemplateCollection;
+				public uint Unknown2;
+				public uint Unknown3;
+				public uint Unknown4;
+				public uint Unknown5;
+				public uint Unknown6;
+				public uint Unknown7;
+				public uint Unknown8;
+				public uint Unknown9;
 
 				[TagStructure(Size = 0x18)]
-				public class UnknownBlock
+				public class Component
 				{
-					public HaloTag Unknown;
-					public float Unknown2;
-					public float Unknown3;
+					public HaloTag Sound;
+					public uint Gain;
+					public int Flags;
 				}
 
 				[TagStructure(Size = 0x10)]
-				public class UnknownBlock2
+				public class TemplateCollectionBlock
 				{
-					public float Unknown;
-					public List<UnknownBlock> Unknown2;
+					public StringId DspEffect;
+					public List<Parameter> Parameters;
 
 					[TagStructure(Size = 0x2C)]
-					public class UnknownBlock
+					public class Parameter
 					{
-						public float Unknown;
-						public float Unknown2;
-						public float Unknown3;
-						public float Unknown4;
-						public float Unknown5;
-						public float Unknown6;
-						public byte[] Unknown7;
+						public StringId Name;
+						public uint Unknown;
+						public uint Unknown2;
+						public uint HardwareOffset;
+						public uint Unknown3;
+						public uint DefaultScalarValue;
+						public byte[] Function;
 					}
 				}
 			}

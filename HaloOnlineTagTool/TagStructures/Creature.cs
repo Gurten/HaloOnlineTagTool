@@ -38,15 +38,15 @@ namespace HaloOnlineTagTool.TagStructures
 		public Angle UphillCutoffAngle;
 		public float DownhillVelocityScale;
 		public float UphillVelocityScale;
-		public float Unknown6;
-		public float Unknown7;
-		public float Unknown8;
-		public float Unknown9;
-		public float Unknown10;
-		public float Unknown11;
-		public float Unknown12;
+		public uint Unknown6;
+		public uint Unknown7;
+		public uint Unknown8;
+		public uint Unknown9;
+		public uint Unknown10;
+		public uint Unknown11;
+		public uint Unknown12;
 		public float FallingVelocityScale;
-		public float Unknown13;
+		public uint Unknown13;
 		public Angle BankAngle;
 		public float BankApplyTime;
 		public float BankDecayTime;
@@ -58,12 +58,10 @@ namespace HaloOnlineTagTool.TagStructures
 		public Angle AngularVelocityMaximum;
 		public Angle AngularAccelerationMaximum;
 		public float CrouchVelocityModifier;
-		public float Unknown14;
+		public uint Unknown14;
 		public HaloTag ImpactDamage;
 		public HaloTag ImpactShieldDamage;
-		public float Unknown15;
-		public float Unknown16;
-		public float Unknown17;
+		public List<MetagameProperty> MetagameProperties;
 		public float DestroyAfterDeathTimeMin;
 		public float DestroyAfterDeathTimeMax;
 
@@ -115,18 +113,18 @@ namespace HaloOnlineTagTool.TagStructures
 			public int Offset;
 			public int Unknown3;
 			public float Radius;
-			public float Unknown4;
-			public float Unknown5;
-			public float Unknown6;
+			public uint Unknown4;
+			public uint Unknown5;
+			public uint Unknown6;
 			public int Unknown7;
 			public short Size2;
 			public short Count2;
 			public int Offset2;
 			public int Unknown8;
 			public float Radius2;
-			public float Unknown9;
-			public float Unknown10;
-			public float Unknown11;
+			public uint Unknown9;
+			public uint Unknown10;
+			public uint Unknown11;
 			public float TranslationI;
 			public float TranslationJ;
 			public float TranslationK;
@@ -154,9 +152,9 @@ namespace HaloOnlineTagTool.TagStructures
 			public int Offset;
 			public int Unknown3;
 			public float Radius;
-			public float Unknown4;
-			public float Unknown5;
-			public float Unknown6;
+			public uint Unknown4;
+			public uint Unknown5;
+			public uint Unknown6;
 			public float BottomI;
 			public float BottomJ;
 			public float BottomK;
@@ -188,22 +186,79 @@ namespace HaloOnlineTagTool.TagStructures
 			public int Offset;
 			public int Unknown3;
 			public float Radius;
-			public float Unknown4;
-			public float Unknown5;
-			public float Unknown6;
+			public uint Unknown4;
+			public uint Unknown5;
+			public uint Unknown6;
 			public int Unknown7;
 			public short Size2;
 			public short Count2;
 			public int Offset2;
 			public int Unknown8;
 			public float Radius2;
-			public float Unknown9;
-			public float Unknown10;
-			public float Unknown11;
+			public uint Unknown9;
+			public uint Unknown10;
+			public uint Unknown11;
 			public float TranslationI;
 			public float TranslationJ;
 			public float TranslationK;
 			public float TranslationRadius;
+		}
+
+		[TagStructure(Size = 0x8)]
+		public class MetagameProperty
+		{
+			public byte Flags;
+			public UnitValue Unit;
+			public ClassificationValue Classification;
+			public sbyte Unknown;
+			public short Points;
+			public short Unknown2;
+
+			public enum UnitValue : sbyte
+			{
+				Brute,
+				Grunt,
+				Jackal,
+				Marine,
+				Bugger,
+				Hunter,
+				FloodInfection,
+				FloodCarrier,
+				FloodCombat,
+				FloodPureform,
+				Sentinel,
+				Elite,
+				Turret,
+				Mongoose,
+				Warthog,
+				Scorpion,
+				Hornet,
+				Pelican,
+				Shade,
+				Watchtower,
+				Ghost,
+				Chopper,
+				Mauler,
+				Wraith,
+				Banshee,
+				Phantom,
+				Scarab,
+				Guntower,
+				Engineer,
+				EngineerRechargeStation,
+			}
+
+			public enum ClassificationValue : sbyte
+			{
+				Infantry,
+				Leader,
+				Hero,
+				Specialist,
+				LightVehicle,
+				HeavyVehicle,
+				GiantVehicle,
+				StandardVehicle,
+			}
 		}
 	}
 }

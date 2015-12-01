@@ -13,12 +13,12 @@ namespace HaloOnlineTagTool.TagStructures
 	public class GfxTexturesList
 	{
 		public List<Texture> Textures;
-		public float Unknown;
+		public uint Unknown;
 
 		[TagStructure(Size = 0x110)]
 		public class Texture
 		{
-			public string FileName;
+			[TagField(Length = 256)] public string FileName;
 			public HaloTag Bitmap;
 		}
 	}

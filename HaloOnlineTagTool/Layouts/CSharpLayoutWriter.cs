@@ -55,6 +55,8 @@ namespace HaloOnlineTagTool.Layouts
 			private string _indent;
 			private int _indentLevel;
 			private int _arrayCount = 1;
+			private int _stringLength = 0;
+			private bool _short = false;
 			private readonly Queue<string> _subBlocks = new Queue<string>();
 			private readonly Dictionary<string, int> _nameCounts = new Dictionary<string, int>(); 
 
@@ -78,7 +80,9 @@ namespace HaloOnlineTagTool.Layouts
 
 			public void Visit(BasicTagLayoutField field)
 			{
+				_short = (field.Type == BasicFieldType.ShortTagReference);
 				AddElement(GetTypeName(field.Type), field.Name);
+				_short = false;
 			}
 
 			public void Visit(ArrayTagLayoutField field)
@@ -100,8 +104,9 @@ namespace HaloOnlineTagTool.Layouts
 
 			public void Visit(StringTagLayoutField field)
 			{
-				// TODO: Make use of the Size property on the field
+				_stringLength = field.Size;
 				AddElement("string", field.Name);
+				_stringLength = 0;
 			}
 
 			public void Visit(TagBlockTagLayoutField field)
@@ -138,13 +143,11 @@ namespace HaloOnlineTagTool.Layouts
 			private void AddElement(string type, string name)
 			{
 				if (_arrayCount > 1)
-				{
-					_writer.WriteLine("{0}[TagField(Count = {1})] public {2}[] {3};", _indent, _arrayCount, type, MakeName(name));
-				}
+					_writer.WriteLine("{0}[TagField(Count = {1}{2})] public {3}[] {4};", _indent, _arrayCount, _short ? ", Flags = TagFieldFlags.Short" : "", type, MakeName(name));
+				else if (_stringLength > 0)
+					_writer.WriteLine("{0}[TagField(Length = {1})] public {2} {3};", _indent, _stringLength, type, MakeName(name));
 				else
-				{
-					_writer.WriteLine("{0}public {1} {2};", _indent, type, MakeName(name));
-				}
+					_writer.WriteLine("{0}{1}public {2} {3};", _indent, _short ? "[TagField(Flags = TagFieldFlags.Short)] " : "", type, MakeName(name));
 			}
 
 			private string BuildEnum(EnumLayout layout, TextWriter writer)
@@ -197,6 +200,7 @@ namespace HaloOnlineTagTool.Layouts
 					case BasicFieldType.StringId:
 						return "StringId";
 					case BasicFieldType.TagReference:
+					case BasicFieldType.ShortTagReference:
 						return "HaloTag";
 					case BasicFieldType.DataReference:
 						return "byte[]";

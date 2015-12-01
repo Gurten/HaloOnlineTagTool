@@ -12,48 +12,48 @@ namespace HaloOnlineTagTool.TagStructures
 	[TagStructure(Class = "rasg", Size = 0xBC)]
 	public class RasterizerGlobals
 	{
-		public List<UnknownBlock> Unknown;
-		public List<UnknownBlock2> Unknown2;
-		public HaloTag Unknown3;
-		public HaloTag Unknown4;
-		public List<UnknownBlock3> Unknown5;
-		public float Unknown6;
+		public List<DefaultBitmap> DefaultBitmaps;
+		public List<DefaultRasterizerBitmap> DefaultRasterizerBitmaps;
+		public HaloTag VertexShaderSimple;
+		public HaloTag PixelShaderSimple;
+		public List<DefaultShader> DefaultShaders;
+		public uint Unknown;
+		public uint Unknown2;
+		public uint Unknown3;
+		public int Unknown4;
+		public int Unknown5;
+		public HaloTag ActiveCamoDistortion;
+		public HaloTag DefaultPerformanceTemplate;
+		public HaloTag DefaultShieldImpact;
+		public HaloTag DefaultVisionMode;
+		public int Unknown6;
 		public float Unknown7;
 		public float Unknown8;
 		public float Unknown9;
 		public float Unknown10;
-		public HaloTag Unknown11;
-		public HaloTag Unknown12;
-		public HaloTag Unknown13;
-		public HaloTag Unknown14;
-		public float Unknown15;
-		public float Unknown16;
-		public float Unknown17;
-		public float Unknown18;
-		public float Unknown19;
-		public float Unknown20;
-		public float Unknown21;
-		public float Unknown22;
-		public float Unknown23;
+		public float Unknown11;
+		public float Unknown12;
+		public uint Unknown13;
+		public uint Unknown14;
 
 		[TagStructure(Size = 0x14)]
-		public class UnknownBlock
+		public class DefaultBitmap
 		{
-			public float Unknown;
-			public HaloTag Unknown2;
+			public int Unknown;
+			public HaloTag Bitmap;
 		}
 
 		[TagStructure(Size = 0x10)]
-		public class UnknownBlock2
+		public class DefaultRasterizerBitmap
 		{
-			public HaloTag Unknown;
+			public HaloTag Bitmap;
 		}
 
 		[TagStructure(Size = 0x20)]
-		public class UnknownBlock3
+		public class DefaultShader
 		{
-			public HaloTag Unknown;
-			public HaloTag Unknown2;
+			public HaloTag VertexShader;
+			public HaloTag PixelShader;
 		}
 	}
 }

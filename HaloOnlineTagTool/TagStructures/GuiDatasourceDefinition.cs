@@ -13,11 +13,11 @@ namespace HaloOnlineTagTool.TagStructures
 	public class GuiDatasourceDefinition
 	{
 		public StringId Name;
-		public float Unknown;
-		public float Unknown2;
-		public float Unknown3;
+		public uint Unknown;
+		public uint Unknown2;
+		public uint Unknown3;
 		public List<Datum> Data;
-		public float Unknown4;
+		public uint Unknown4;
 
 		[TagStructure(Size = 0x28)]
 		public class Datum
@@ -38,7 +38,7 @@ namespace HaloOnlineTagTool.TagStructures
 			public class StringValue
 			{
 				public StringId DataType;
-				public string Value;
+				[TagField(Length = 20)] public string Value;
 			}
 
 			[TagStructure(Size = 0x8)]

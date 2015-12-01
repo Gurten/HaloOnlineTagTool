@@ -31,21 +31,21 @@ namespace HaloOnlineTagTool.Serialization
 		/// <summary>
 		/// Serializes a tag structure into a context.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
 		/// <param name="context">The serialization context to use.</param>
 		/// <param name="tagStructure">The tag structure.</param>
-		public void Serialize<T>(ISerializationContext context, T tagStructure)
+		public void Serialize(ISerializationContext context, object tagStructure)
 		{
 			// Serialize the structure to a data block
-			context.BeginSerialize();
+			var info = new TagStructureInfo(tagStructure.GetType(), _version);
+			context.BeginSerialize(info);
 			var tagStream = new MemoryStream();
 			var structBlock = context.CreateBlock();
-			SerializeStruct(context, tagStream, structBlock, tagStructure);
+			SerializeStruct(context, tagStream, structBlock, info, tagStructure);
 
 			// Finalize the block and write all of the tag data out
 			var mainStructOffset = structBlock.Finalize(tagStream);
 			var data = tagStream.ToArray();
-			context.EndSerialize(data, mainStructOffset);
+			context.EndSerialize(info, data, mainStructOffset);
 		}
 
 		/// <summary>
@@ -54,20 +54,20 @@ namespace HaloOnlineTagTool.Serialization
 		/// <param name="context">The serialization context to use.</param>
 		/// <param name="tagStream">The stream to write completed blocks of tag data to.</param>
 		/// <param name="block">The temporary block to write incomplete tag data to.</param>
+		/// <param name="info">Information about the tag structure type.</param>
 		/// <param name="structure">The structure to serialize.</param>
 		/// <exception cref="System.InvalidOperationException">Structure type must have TagStructureAttribute</exception>
-		private void SerializeStruct(ISerializationContext context, MemoryStream tagStream, IDataBlock block, object structure)
+		private void SerializeStruct(ISerializationContext context, MemoryStream tagStream, IDataBlock block, TagStructureInfo info, object structure)
 		{
-			var structType = structure.GetType();
 			var baseOffset = block.Stream.Position;
-			var enumerator = new TagFieldEnumerator(structType, _version);
+			var enumerator = new TagFieldEnumerator(info);
 			while (enumerator.Next())
 				SerializeProperty(context, tagStream, block, structure, enumerator, baseOffset);
 
 			// Honor the struct size if it's defined
-			if (enumerator.Structure.Size > 0)
+			if (enumerator.Info.TotalSize > 0)
 			{
-				block.Stream.Position = baseOffset + enumerator.Structure.Size;
+				block.Stream.Position = baseOffset + enumerator.Info.TotalSize;
 				if (block.Stream.Position > block.Stream.Length)
 					block.Stream.SetLength(block.Stream.Position);
 			}
@@ -178,14 +178,14 @@ namespace HaloOnlineTagTool.Serialization
 		/// <param name="valueType">Type of the value.</param>
 		private void SerializeComplexValue(ISerializationContext context, MemoryStream tagStream, IDataBlock block, object val, TagFieldAttribute valueInfo, Type valueType)
 		{
-			if (valueInfo != null && ((valueInfo.Flags & TagElementFlags.Indirect) != 0 || valueType == typeof(ResourceReference)))
+			if (valueInfo != null && ((valueInfo.Flags & TagFieldFlags.Indirect) != 0 || valueType == typeof(ResourceReference)))
 				SerializeIndirectValue(context, tagStream, block, val, valueType);
 			else if (valueType.IsEnum)
 				SerializePrimitiveValue(block.Writer, val, valueType.GetEnumUnderlyingType());
 			else if (valueType == typeof(string))
-				SerializeString(block.Writer, (string)val);
+				SerializeString(block.Writer, (string)val, valueInfo);
 			else if (valueType == typeof(HaloTag))
-				SerializeTagReference(block.Writer, (HaloTag)val);
+				SerializeTagReference(block.Writer, (HaloTag)val, valueInfo);
 			else if (valueType == typeof(ResourceAddress))
 				block.Writer.Write(((ResourceAddress)val).Value);
 			else if (valueType == typeof(byte[]))
@@ -207,7 +207,7 @@ namespace HaloOnlineTagTool.Serialization
 			else if (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(Range<>))
 				SerializeRange(block, val);
 			else
-				SerializeStruct(context, tagStream, block, val);
+				SerializeStruct(context, tagStream, block, new TagStructureInfo(val.GetType(), _version), val);
 		}
 
 		/// <summary>
@@ -215,11 +215,20 @@ namespace HaloOnlineTagTool.Serialization
 		/// </summary>
 		/// <param name="writer">The writer to write to.</param>
 		/// <param name="str">The string to serialize.</param>
-		private static void SerializeString(BinaryWriter writer, string str)
+		/// <param name="valueInfo">Information about the value.</param>
+		private static void SerializeString(BinaryWriter writer, string str, TagFieldAttribute valueInfo)
 		{
-			var bytes = Encoding.UTF8.GetBytes(str);
-			writer.Write(bytes);
-			writer.Write((byte)0);
+			if (valueInfo == null || valueInfo.Length == 0)
+				throw new ArgumentException("Cannot serialize a string with no length set");
+			var clampedLength = 0;
+			if (str != null)
+			{
+				var bytes = Encoding.ASCII.GetBytes(str);
+				clampedLength = Math.Min(valueInfo.Length - 1, bytes.Length);
+				writer.Write(bytes, 0, clampedLength);
+			}
+			for (var i = clampedLength; i < valueInfo.Length; i++)
+				writer.Write((byte)0);
 		}
 
 		/// <summary>
@@ -227,12 +236,16 @@ namespace HaloOnlineTagTool.Serialization
 		/// </summary>
 		/// <param name="writer">The writer to write to.</param>
 		/// <param name="referencedTag">The referenced tag.</param>
-		private static void SerializeTagReference(BinaryWriter writer, HaloTag referencedTag)
+		/// <param name="valueInfo">Information about the value. Can be <c>null</c>.</param>
+		private static void SerializeTagReference(BinaryWriter writer, HaloTag referencedTag, TagFieldAttribute valueInfo)
 		{
 			// Write the reference out
-			writer.Write((referencedTag != null) ? referencedTag.GroupTag.Value : -1);
-			writer.Write(0);
-			writer.Write(0);
+			if (valueInfo == null || (valueInfo.Flags & TagFieldFlags.Short) == 0)
+			{
+				writer.Write((referencedTag != null) ? referencedTag.GroupTag.Value : -1);
+				writer.Write(0);
+				writer.Write(0);
+			}
 			writer.Write((referencedTag != null) ? referencedTag.Index : -1);
 		}
 

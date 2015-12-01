@@ -12,13 +12,13 @@ namespace HaloOnlineTagTool.TagStructures
 	[TagStructure(Class = "cmoe", Size = 0x40)]
 	public class Camo
 	{
-		public float Unknown;
-		public float Unknown2;
-		public float Unknown3;
-		public byte[] Unknown4;
-		public float Unknown5;
-		public float Unknown6;
-		public byte[] Unknown7;
-		public float Unknown8;
+		public short Unknown;
+		public short Unknown2;
+		public StringId Unknown3;
+		public uint Unknown4;
+		public byte[] Unknown5;
+		public StringId Unknown6;
+		public uint Unknown7;
+		public byte[] Unknown8;
 	}
 }

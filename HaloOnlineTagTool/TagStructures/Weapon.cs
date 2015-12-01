@@ -9,41 +9,10 @@ using HaloOnlineTagTool.Serialization;
 
 namespace HaloOnlineTagTool.TagStructures
 {
-	[TagStructure(Class = "weap", Size = 0x438)]
-	public class Weapon : GameObject
+	[TagStructure(Class = "weap", Size = 0x384, MaxVersion = EngineVersion.V10_1_449175_Live)]
+	[TagStructure(Class = "weap", Size = 0x390, MaxVersion = EngineVersion.V11_1_498295_Live)]
+	public class Weapon : Item
 	{
-		public uint Flags2;
-		public short OldMessageIndex;
-		public short SortOrder;
-		public float OldMultiplayerOnGroundScale;
-		public float OldCampaignOnGroundScale;
-		public StringId PickupMessage;
-		public StringId SwapMessage;
-		public StringId PickupOrDualWieldMessage;
-		public StringId SwapOrDualWieldMessage;
-		public StringId PickedUpMessage;
-		public StringId SwitchToMessage;
-		public StringId SwitchToFromAiMessage;
-		public StringId AllWeaponsEmptyMessage;
-		public HaloTag CollisionSound;
-		public List<PredictedBitmap> PredictedBitmaps;
-		public HaloTag DetonationDamageEffect;
-		public float DetonationDelayMin;
-		public float DetonationDelayMax;
-		public HaloTag DetonatingEffect;
-		public HaloTag DetonationEffect;
-		public float CampaignGroundScale;
-		public float MultiplayerGroundScale;
-		public float HumanHoldScale;
-		public float HumanHolsterScale;
-		public float CovenantHoldScale;
-		public float CovenantHolsterScale;
-		public float PlayerHoldScale;
-		public float PlayerHoldScale2;
-		public float BossHoldScale;
-		public float BossHolsterScale;
-		public float Unknown6;
-		public float Unknown7;
 		public uint Flags3;
 		public uint MoreFlags;
 		public StringId Unknown8;
@@ -98,17 +67,17 @@ namespace HaloOnlineTagTool.TagStructures
 		public float MagnetismRangeShort;
 		public float MagnetismSafeRadius;
 		public Angle DeviationAngle;
-		public float Unknown10;
-		public float Unknown11;
-		public float Unknown12;
-		public float Unknown13;
-		public float Unknown14;
-		public float Unknown15;
+		public uint Unknown10;
+		public uint Unknown11;
+		public uint Unknown12;
+		public uint Unknown13;
+		public uint Unknown14;
+		public uint Unknown15;
 		public List<TargetTrackingBlock> TargetTracking;
-		public float Unknown16;
-		public float Unknown17;
-		public float Unknown18;
-		public float Unknown19;
+		public uint Unknown16;
+		public uint Unknown17;
+		public uint Unknown18;
+		public uint Unknown19;
 		public MovementPenalizedValue MovementPenalized;
 		public short Unknown20;
 		public float ForwardsMovementPenalty;
@@ -126,11 +95,12 @@ namespace HaloOnlineTagTool.TagStructures
 		public HaloTag ZoomInSound;
 		public HaloTag ZoomOutSound;
 		public float ActiveCamoDing;
-		public float Unknown21;
-		public float Unknown22;
-		public float Unknown23;
+		public uint Unknown21;
+		public uint Unknown22;
+		public uint Unknown23;
 		public StringId WeaponClass;
 		public StringId WeaponName;
+		public uint Unknown24;
 		public MultiplayerWeaponTypeValue MultiplayerWeaponType;
 		public WeaponTypeValue WeaponType;
 		public SpecialHudVersionValue SpecialHudVersion;
@@ -141,8 +111,8 @@ namespace HaloOnlineTagTool.TagStructures
 		public List<Magazine> Magazines;
 		public List<Trigger> Triggers;
 		public List<Barrel> Barrels;
-		public float Unknown24;
-		public float Unknown25;
+		public uint Unknown25;
+		public uint Unknown26;
 		public float MaximumMovementAcceleration;
 		public float MaximumMovementVelocity;
 		public float MaximumTurningAcceleration;
@@ -153,10 +123,11 @@ namespace HaloOnlineTagTool.TagStructures
 		public HaloTag AgeWeapon;
 		public HaloTag AgedMaterialEffects;
 		public float HammerAgePerUse;
-		public float UnknownSwordAgePerUse;
+		public uint UnknownSwordAgePerUse;
 		public float FirstPersonWeaponOffsetI;
 		public float FirstPersonWeaponOffsetJ;
 		public float FirstPersonWeaponOffsetK;
+		[MinVersion(EngineVersion.V11_1_498295_Live)] public List<NewFirstPersonWeaponOffset> NewFirstPersonWeaponOffsets;
 		public float FirstPersonScopeSizeI;
 		public float FirstPersonScopeSizeJ;
 		public float ThirdPersonPitchBoundsMin;
@@ -165,12 +136,6 @@ namespace HaloOnlineTagTool.TagStructures
 		public float MeleeWeaponDelay;
 		public float ReadyAnimationDuration;
 		public StringId WeaponHolsterMarker;
-
-		[TagStructure(Size = 0x10)]
-		public class PredictedBitmap
-		{
-			public HaloTag Bitmap;
-		}
 
 		public enum SecondaryTriggerModeValue : short
 		{
@@ -318,7 +283,7 @@ namespace HaloOnlineTagTool.TagStructures
 		{
 			public short Type;
 			public short ResourceIndex;
-			public HaloTag TagIndex;
+			[TagField(Flags = TagFieldFlags.Short)] public HaloTag TagIndex;
 		}
 
 		[TagStructure(Size = 0x80)]
@@ -335,12 +300,12 @@ namespace HaloOnlineTagTool.TagStructures
 			public short RoundsReloaded;
 			public short Unknown2;
 			public float ChamberTime;
-			public float Unknown3;
-			public float Unknown4;
-			public float Unknown5;
-			public float Unknown6;
-			public float Unknown7;
-			public float Unknown8;
+			public uint Unknown3;
+			public uint Unknown4;
+			public uint Unknown5;
+			public uint Unknown6;
+			public uint Unknown7;
+			public uint Unknown8;
 			public HaloTag ReloadingEffect;
 			public HaloTag ReloadingDamageEffect;
 			public HaloTag ChamberingEffect;
@@ -382,9 +347,9 @@ namespace HaloOnlineTagTool.TagStructures
 			public float ChargingAgeDegeneration;
 			public HaloTag Unknown2;
 			public HaloTag Unknown3;
-			public float Unknown4;
-			public float Unknown5;
-			public float Unknown6;
+			public uint Unknown4;
+			public uint Unknown5;
+			public uint Unknown6;
 
 			public enum ButtonUsedValue : short
 			{
@@ -467,8 +432,8 @@ namespace HaloOnlineTagTool.TagStructures
 			public Angle DynamicTurningSpeedMax;
 			public float AccelerationTime3;
 			public float DecelerationTime3;
-			public float Unknown;
-			public float Unknown2;
+			public uint Unknown;
+			public uint Unknown2;
 			public Angle MinimumError;
 			public Angle ErrorAngleMin;
 			public Angle ErrorAngleMax;
@@ -514,13 +479,13 @@ namespace HaloOnlineTagTool.TagStructures
 			public float AngleChangeDecelerationTime;
 			public AngleChangeFunctionValue AngleChangeFunction;
 			public short Unknown5;
-			public float Unknown6;
-			public float Unknown7;
+			public uint Unknown6;
+			public uint Unknown7;
 			public float FiringEffectDecelerationTime;
-			public float Unknown8;
+			public uint Unknown8;
 			public float RateOfFireAccelerationTime;
 			public float RateOfFireDecelerationTime;
-			public float Unknown9;
+			public uint Unknown9;
 			public float BloomRateOfDecay;
 			public List<FiringEffect> FiringEffects;
 
@@ -700,6 +665,14 @@ namespace HaloOnlineTagTool.TagStructures
 				public HaloTag RiderEmptyResponse;
 				public HaloTag RiderUnknownResponse;
 			}
+		}
+
+		[TagStructure(Size = 0xC)]
+		public class NewFirstPersonWeaponOffset
+		{
+			public float OffsetI;
+			public float OffsetJ;
+			public float OffsetK;
 		}
 	}
 }
