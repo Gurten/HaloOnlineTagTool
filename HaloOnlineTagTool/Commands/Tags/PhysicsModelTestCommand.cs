@@ -58,10 +58,10 @@ namespace HaloOnlineTagTool.Commands.Tags
 				return false;
 			}
 
-			var filename = args[0];
+			var filepath = args[0];
 
 			var modelbuilder = new PhysicsModelBuilder();
-			if (!modelbuilder.ParseFromFile(filename))
+			if (!modelbuilder.ParseFromFile(filepath))
 			{
 				return false;
 			}

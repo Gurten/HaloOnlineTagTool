@@ -11,11 +11,11 @@ namespace HaloOnlineTagTool.Resources.Geometry
 	class BlenderPhmoReader
 	{
 
-		public string filename;
+		public string filepath;
 
-		public BlenderPhmoReader(string fname)
+		public BlenderPhmoReader(string fpath)
 		{
-			filename = fname;
+			filepath = fpath;
 		}
 
 		public JSONNode ReadFile()
@@ -24,13 +24,22 @@ namespace HaloOnlineTagTool.Resources.Geometry
 			try
 			{
 				// open the file as a text-stream
-				StreamReader sr = new StreamReader(filename);
+                StreamReader sr = null;
+
+                try
+                {
+                    sr = new StreamReader(filepath);
+
+                }catch(FileNotFoundException){
+                    Console.WriteLine("The system cannot find the file specified.");
+                    return null;
+                }
 				contents = sr.ReadToEnd();
 				sr.Close();
 			}
 			catch (FileNotFoundException)
 			{
-				Console.WriteLine("File: {0} could not be found.", filename);
+				Console.WriteLine("File: {0} could not be found.", filepath);
 				return null;
 			};
 

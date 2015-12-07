@@ -60,11 +60,24 @@ namespace HaloOnlineTagTool.TagStructures
 					[TagStructure(Size = 0x8)]
 					public class Bsp3dNode
 					{
+                        /*
 						public byte Unknown;
 						public short SecondChild;
 						public byte Unknown2;
 						public short FirstChild;
 						public short Plane;
+                        */
+
+                        public short Plane;
+                        //children are compressed to int24
+                        public byte BackChildLower;
+                        public byte BackChildMid;
+                        public byte BackChildUpper;
+
+                        public byte FrontChildLower;
+                        public byte FrontChildMid;
+                        public byte FrontChildUpper;
+
 					}
 
 					[TagStructure(Size = 0x10)]
@@ -80,9 +93,8 @@ namespace HaloOnlineTagTool.TagStructures
 					public class Leaf
 					{
 						public short Flags;
-						public short Bsp2dReferenceCount;
-						public short Unknown;
-						public short FirstBsp2dReference;
+						public ushort Bsp2dReferenceCount;
+						public int FirstBsp2dReference;
 					}
 
 					[TagStructure(Size = 0x4)]

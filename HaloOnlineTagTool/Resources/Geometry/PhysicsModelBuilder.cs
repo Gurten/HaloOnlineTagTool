@@ -46,10 +46,10 @@ namespace HaloOnlineTagTool.Resources.Geometry
 		}
 
 
-		public bool ParseFromFile(string fname)
+		public bool ParseFromFile(string fpath)
 		{
 
-			BlenderPhmoReader reader = new BlenderPhmoReader(fname);
+			BlenderPhmoReader reader = new BlenderPhmoReader(fpath);
 			fileStruct = reader.ReadFile();
 			if (fileStruct == null)
 			{

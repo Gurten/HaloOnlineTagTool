@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Analysis\DataReferenceGuess.cs" />
     <Compile Include="Analysis\ITagElementGuessVisitor.cs" />
+    <Compile Include="Commands\Tags\CollTestCommand.cs" />
     <Compile Include="Commands\Tags\MatchTagsCommand.cs" />
     <Compile Include="Commands\Tags\ConvertPluginsCommand.cs" />
     <Compile Include="Commands\Tags\ImportBitmapCommand.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="Common\Vector4.cs" />
     <Compile Include="Commands\OpenTagCache.cs" />
     <Compile Include="Layouts\TagLayoutField.cs" />
+    <Compile Include="Resources\Geometry\CollisionGeometryBuilder.cs" />
     <Compile Include="Resources\Geometry\GeometryReference.cs" />
     <Compile Include="Resources\Geometry\BlenderPhmoReader.cs" />
     <Compile Include="Resources\Geometry\PhysicsModelBuilder.cs" />
