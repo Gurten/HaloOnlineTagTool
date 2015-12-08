@@ -8,7 +8,7 @@
 bl_info = {
     "name": "Tetrahedral model importer (VTK)",
     "author": "Gurten",
-    "version": ( 1, 0, 1 ),
+    "version": ( 1, 0, 2 ),
     "blender": ( 2, 6, 3 ),
     "location": "File > Import > Tetrahedral model importer (.vtk)",
     "description": "Tetrahedral model importer (.vtk)",
@@ -37,16 +37,31 @@ def load_vtk(fpath):
     f = open(fpath, 'r')
     lines = f.read().splitlines()
     f.close()
+    n_pts = 0
     tetra_lines = []; vert_lines = []
     for i, l in enumerate(lines):
         if l.startswith("POINTS"):
             id, n, datatype = l.split()
-            vert_lines = lines[(i+1):(i+1+int(n))]
+            n_pts = int(n)
+            vert_lines = lines[(i+1):(i+1+n_pts)]
         if l.startswith("CELLS"):
             id, n, unk = l.split()
             tetra_lines = lines[(i+1):(i+1+int(n))]
     verts = [Vector([float(c) for c in v.split()[:3]])  for v in vert_lines]
     indices = [[int(i) for i in t.split()[1:5]] for t in tetra_lines]
+    flat_indices = [item for sublist in indices for item in sublist]
+    # This is a quick fix for an issue encountered where
+    # in some .vtk files the indexing begins at 1 instead of 0
+    min = 1<<32; max = 0
+    for i in flat_indices:
+        if i < min:
+            min = i
+        if i > max:
+            max = i
+    if min == 1 and max == n_pts:
+        for quadruple in indices:
+            for i in range(len(quadruple)):
+                quadruple[i] -= 1
     return verts, indices
 
 def get_tetras(fpath):
