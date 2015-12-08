@@ -82,14 +82,8 @@ def serialisePolyhedron(obj):
     for p in obj.data.polygons:
         triples = []
         points = [local_verts[obj.data.loops[idx].vertex_index] for idx in p.loop_indices] 
-        if len(points) == 3:
-            triples.append(points)
-        elif len(points) == 4:
-            points.append(points[0])
-            triples.append(points[:3])
-            triples.append(points[2:])
-        else:
-            raise Exception("n-gon (n>4) not supported. Tesselate mesh for object \'%s\' in Edit-Mode using Ctrl-T" % obj.name)
+        for i in range(len(points)-2):
+            triples.append((points[0], points[i+1], points[i+2]))
         for trip in triples:
             if areaOfTris(trip) < min_area:
                 continue

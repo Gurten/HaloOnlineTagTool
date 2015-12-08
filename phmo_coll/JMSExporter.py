@@ -117,18 +117,10 @@ class ExportJMS(bpy.types.Operator, ExportHelper):
             if len(obj.data.materials) is not 0: # Occurs when a face has a material assigned
                 # get the global material list index
                 face_material_idx = materials_d[obj.data.materials[face_material_idx].name]
-            if len(face_vert_indices) == 3:
-                face_data.append([[face_unknown, face_material_idx], face_vert_indices])
-                n_faces +=1
-            elif len(face_vert_indices) == 4:
-                #reduce a quad to two tris
-                face_vert_indices.append(face_vert_indices[0])
-                face_data.append([[face_unknown, face_material_idx], face_vert_indices[:3]])
-                face_data.append([[face_unknown, face_material_idx], face_vert_indices[2:]])
-                n_faces +=2
-            else:
-                raise Exception("n-gon (n>4) not supported. Tesselate mesh for object \'%s\' in Edit-Mode using Ctrl-T" % obj.name)
-                
+            
+            for i in range(len(face_vert_indices)-2):
+                face_data.append([[face_unknown, face_material_idx], (face_vert_indices[0], face_vert_indices[i+1], face_vert_indices[i+2])])    
+            
             for l in face_data:
                 face_vals = [item for sublist in l for item in sublist]
                 face_str += ("%d\n%d\n%d\t%d\t%d\n" % tuple(face_vals))
