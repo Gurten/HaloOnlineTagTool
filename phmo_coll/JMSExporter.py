@@ -8,7 +8,7 @@
 bl_info = {
     "name": "Halo 1 CE JMS Exporter for collision",
     "author": "Gurten",
-    "version": ( 1, 0, 1 ),
+    "version": ( 1, 0, 3 ),
     "blender": ( 2, 6, 3 ),
     "location": "File > Export > Halo 1 CE JMS Exporter collision (.jms)",
     "description": "Halo 1 CE JMS Exporter collision (.jms)",
@@ -119,7 +119,8 @@ class ExportJMS(bpy.types.Operator, ExportHelper):
                 face_material_idx = materials_d[obj.data.materials[face_material_idx].name]
             
             for i in range(len(face_vert_indices)-2):
-                face_data.append([[face_unknown, face_material_idx], (face_vert_indices[0], face_vert_indices[i+1], face_vert_indices[i+2])])    
+                face_data.append([[face_unknown, face_material_idx], (face_vert_indices[0], face_vert_indices[i+1], face_vert_indices[i+2])]) 
+				n_faces += 1
             
             for l in face_data:
                 face_vals = [item for sublist in l for item in sublist]

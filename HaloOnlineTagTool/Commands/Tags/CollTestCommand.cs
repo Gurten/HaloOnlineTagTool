@@ -116,8 +116,8 @@ namespace HaloOnlineTagTool.Commands.Tags
                         Console.WriteLine("Builder produced null result.");
                         return false;
                     }
-                    //coll.Regions.Add(coll2.Regions[0]);
-                    coll.Regions[0].Permutations[0].Bsps.Add(coll2.Regions[0].Permutations[0].Bsps[0]);
+                    coll.Regions.Add(coll2.Regions[0]);
+                    //coll.Regions[0].Permutations[0].Bsps.Add(coll2.Regions[0].Permutations[0].Bsps[0]);
                 }
             
             }
