@@ -120,7 +120,7 @@ class ExportJMS(bpy.types.Operator, ExportHelper):
             
             for i in range(len(face_vert_indices)-2):
                 face_data.append([[face_unknown, face_material_idx], (face_vert_indices[0], face_vert_indices[i+1], face_vert_indices[i+2])]) 
-				n_faces += 1
+                n_faces += 1
             
             for l in face_data:
                 face_vals = [item for sublist in l for item in sublist]
