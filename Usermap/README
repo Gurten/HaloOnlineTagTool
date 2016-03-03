@@ -30,7 +30,7 @@ It is recommended that the user:
     models using the 'Mass obj/tag importer (.obj)' import script included with this addon. This 
 	can be found located under 'File>Import' in Blender. The user can specify a value for 
 	'Mesh Quality' on the left hand side on the file importer screen to better suit low-end gpus if 
-	needed. 
+	needed. Batch importing the .objs typically takes 1-2 minutes. 
 
 -   Regularly backs up their usermap and checks that the placements are not partially overwritten
 	by different objects in the game.
