@@ -33,7 +33,7 @@ It is recommended that the user:
 	needed. Batch importing the .objs typically takes 1-2 minutes. 
 
 -   Regularly backs up their usermap and checks that the placements are not partially overwritten
-	by different objects in the game.
+	by different objects in the game. 
 	
 -   Manipulates objects primarily from the 'scenery' tab from Forge, and begins with a map that has
 	at least one of each of the objects they wish to use. 
@@ -46,7 +46,11 @@ It is recommended that the user:
 
 -	Save the Blender scene to prevent losing progress in the event of a Blender crash.
 
-
+- 	Swaps to a different map in the Forge lobby, then switching back to the map before starting the game 
+	in order to refresh any cache of the map.
+        
+-	Makes regular checks that in-game the placements are as intended, and save different Blender scenes
+	at checkpoints of progress to prevent losing work.
 
 
  
