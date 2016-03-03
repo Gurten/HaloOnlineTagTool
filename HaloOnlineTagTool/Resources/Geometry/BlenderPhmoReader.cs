@@ -4,50 +4,41 @@ using SimpleJSON;
 
 namespace HaloOnlineTagTool.Resources.Geometry
 {
-	/// <summary>
-	/// This class loads, reads, tokenises, and parses a simple file format
-	/// designed to store data exported from the Blender modeling program. 
-	/// </summary>
-	class BlenderPhmoReader
-	{
+    /// <summary>
+    /// This class loads, reads, tokenises, and parses a simple file format
+    /// designed to store data exported from the Blender modeling program. 
+    /// </summary>
+    class BlenderPhmoReader
+    {
 
-		public string filepath;
+        public string filename;
 
-		public BlenderPhmoReader(string fpath)
-		{
-			filepath = fpath;
-		}
+        public BlenderPhmoReader(string fname)
+        {
+            filename = fname;
+        }
 
-		public JSONNode ReadFile()
-		{
-			string contents;
-			try
-			{
-				// open the file as a text-stream
-                StreamReader sr = null;
+        public JSONNode ReadFile()
+        {
+            string contents;
+            try
+            {
+                // open the file as a text-stream
+                StreamReader sr = new StreamReader(filename);
+                contents = sr.ReadToEnd();
+                sr.Close();
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("File: {0} could not be found.", filename);
+                return null;
+            };
 
-                try
-                {
-                    sr = new StreamReader(filepath);
+            //parse the file as json
+            var json = JSON.Parse(contents);
 
-                }catch(FileNotFoundException){
-                    Console.WriteLine("The system cannot find the file specified.");
-                    return null;
-                }
-				contents = sr.ReadToEnd();
-				sr.Close();
-			}
-			catch (FileNotFoundException)
-			{
-				Console.WriteLine("File: {0} could not be found.", filepath);
-				return null;
-			};
+            return json;
+        }
 
-			//parse the file as json
-			var json = JSON.Parse(contents);
-
-			return json;
-		}
-
-	}
+    }
 }

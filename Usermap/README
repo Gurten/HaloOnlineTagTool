@@ -1,0 +1,54 @@
+'HaloOnline_usermap_io.py' is an addon for Blender to import and export HaloOnline Forge Usermaps.
+
+To install the addon, move the script 'HaloOnline_usermap_io.py' into the 
+'/Blender/<version>/scritps/addons/' directory of your Blender installation.
+ 
+This is intended to open and save a 'sandbox.map' file (found in the directory: 
+'/<HaloOnline dir>/mods/maps/<map name>/'). 
+
+The placements will be loaded from the file and put into the scene as Objects that can be 
+manipulated. Exporting a usermap is currently flakey but does work correctly if care is taken in
+following the recommendations below. 
+
+The user can save the Blender scene with a map imported into it, restart Blender, load the scene
+and export the map without having to import it again. That is, all information from the usermap is
+kept within the scene, until another usermap is imported.
+
+This tool is suitable for:
+- Precise positioning and rotating of existing forge placements*
+- Duplicating existing forge placements and positioning/rotating them
+- Deleting existing placements*
+
+Points above with an asterisk have been known to cause overwriting/clobbering of some placements by
+the game under some use cases. 
+
+It is recommended that the user:
+-   Get visual models for the usermap placements. This can be done by using HaloOnlineTag tool found
+    in the parent directory of this repository to export the game-object models of tags using the
+    'getdepmodels' command, providing the path to a map (located in '<HaloOnline dir>/maps/') and
+    the path of a directory to put the folder of .obj models. The user can then mass-import the 
+    models using the 'Mass obj/tag importer (.obj)' import script included with this addon. This 
+	can be found located under 'File>Import' in Blender. The user can specify a value for 
+	'Mesh Quality' on the left hand side on the file importer screen to better suit low-end gpus if 
+	needed. 
+
+-   Regularly backs up their usermap and checks that the placements are not partially overwritten
+	by different objects in the game.
+	
+-   Manipulates objects primarily from the 'scenery' tab from Forge, and begins with a map that has
+	at least one of each of the objects they wish to use. 
+	
+- 	Does not move or delete 'null placements' that are at the origin. Different maps have a fixed
+	numbers of these objects (s3d_turf has 215 as of .5.0.2). Attempting to remove them will 
+	guarantee that the game will try to put them back, at the expense of other placements. 
+	
+- 	Has at most 640 placement objects (including null-placements). 
+
+-	Save the Blender scene to prevent losing progress in the event of a Blender crash.
+
+
+
+
+ 
+
+ 

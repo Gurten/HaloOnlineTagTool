@@ -9,16 +9,16 @@ using HaloOnlineTagTool.Serialization;
 
 namespace HaloOnlineTagTool.TagStructures
 {
-	[TagStructure(Class = "sgp!", Size = 0x50)]
-	public class SoundGlobalPropagation
-	{
-		public HaloTag UnderwaterEnvironment;
-		public HaloTag UnderwaterLoop;
-		public uint Unknown;
-		public uint Unknown2;
-		public HaloTag EnterUnderater;
-		public HaloTag ExitUnderwater;
-		public uint Unknown3;
-		public uint Unknown4;
-	}
+    [TagStructure(Name = "sound_global_propagation", Class = "sgp!", Size = 0x50)]
+    public class SoundGlobalPropagation
+    {
+        public TagInstance UnderwaterEnvironment;
+        public TagInstance UnderwaterLoop;
+        public uint Unknown;
+        public uint Unknown2;
+        public TagInstance EnterUnderater;
+        public TagInstance ExitUnderwater;
+        public uint Unknown3;
+        public uint Unknown4;
+    }
 }

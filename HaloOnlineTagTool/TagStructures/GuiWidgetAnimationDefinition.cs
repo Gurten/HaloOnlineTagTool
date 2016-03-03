@@ -9,19 +9,19 @@ using HaloOnlineTagTool.Serialization;
 
 namespace HaloOnlineTagTool.TagStructures
 {
-	[TagStructure(Class = "wgan", Size = 0x80)]
-	public class GuiWidgetAnimationDefinition
-	{
-		public uint Unknown;
-		public uint Unknown2;
-		public HaloTag WidgetColor;
-		public HaloTag WidgetPosition;
-		public HaloTag WidgetRotation;
-		public HaloTag WidgetScale;
-		public HaloTag WidgetTextureCoordinate;
-		public HaloTag WidgetSprite;
-		public HaloTag WidgetFont;
-		public uint Unknown3;
-		public uint Unknown4;
-	}
+    [TagStructure(Name = "gui_widget_animation_definition", Class = "wgan", Size = 0x80)]
+    public class GuiWidgetAnimationDefinition
+    {
+        public uint Unknown;
+        public uint Unknown2;
+        public TagInstance WidgetColor;
+        public TagInstance WidgetPosition;
+        public TagInstance WidgetRotation;
+        public TagInstance WidgetScale;
+        public TagInstance WidgetTextureCoordinate;
+        public TagInstance WidgetSprite;
+        public TagInstance WidgetFont;
+        public uint Unknown3;
+        public uint Unknown4;
+    }
 }

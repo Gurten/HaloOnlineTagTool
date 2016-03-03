@@ -6,21 +6,35 @@ using System.Threading.Tasks;
 
 namespace HaloOnlineTagTool.Analysis
 {
-	public class DataReferenceGuess : ITagElementGuess
-	{
-		public uint Size
-		{
-			get { return 0x14; }
-		}
+    public class DataReferenceGuess : ITagElementGuess
+    {
+        public DataReferenceGuess(uint align)
+        {
+            Align = align;
+        }
 
-		public bool Merge(ITagElementGuess other)
-		{
-			return (other is DataReferenceGuess);
-		}
+        public uint Size
+        {
+            get { return 0x14; }
+        }
 
-		public void Accept(uint offset, ITagElementGuessVisitor visitor)
-		{
-			visitor.Visit(offset, this);
-		}
-	}
+        public uint Align { get; private set; }
+
+        public bool Merge(ITagElementGuess other)
+        {
+            var otherData = other as DataReferenceGuess;
+            if (otherData == null)
+                return false;
+            if (Align == 0)
+                Align = otherData.Align;
+            else if (otherData.Align != 0)
+                Align = Math.Min(Align, otherData.Align);
+            return true;
+        }
+
+        public void Accept(uint offset, ITagElementGuessVisitor visitor)
+        {
+            visitor.Visit(offset, this);
+        }
+    }
 }
